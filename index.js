@@ -26,6 +26,19 @@ async function run() {
   try {
     const blogsCollection = client.db("portfolio").collection("blogs");
 
+    app.post("/blogs", async (req, res) => {
+      const newBlogs = req.body;
+      console.log(newBlogs);
+      const result = await blogsCollection.insertOne(newBlogs);
+      res.send(result);
+    });
+
+    app.get("/blogs", async (req, res) => {
+      const cursor = blogsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     // await client.connect();
 
     // await client.db("admin").command({ ping: 1 });
