@@ -25,6 +25,14 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const blogsCollection = client.db("portfolio").collection("blogs");
+    const contactCollection = client.db("portfolio").collection("contact");
+
+    app.post("/contact", async (req, res) => {
+      const newMessage = req.body;
+      console.log(newMessage);
+      const result = await contactCollection.insertOne(newMessage);
+      res.send(result);
+    });
 
     app.post("/blogs", async (req, res) => {
       const newBlogs = req.body;
